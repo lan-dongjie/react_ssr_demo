@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-rational-order",
+    "stylelint-config-recommended-scss",
+    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-vue",
+    "stylelint-config-recommended-vue/scss",
+    "stylelint-config-prettier"
+  ],
+  "include": ["packages"],
+  "plugins": ["stylelint-declaration-block-no-ignored-properties", "stylelint-scss"],
+  "rules": {
+    "plugin/declaration-block-no-ignored-properties": true,
+    "value-list-max-empty-lines": 0,
+    "declaration-empty-line-before": "never",
+    "comment-whitespace-inside": "always",
+    "indentation": 2,
+    "custom-property-pattern": null,
+    "scss/no-global-function-names": null,
+    "no-descending-specificity": null,
+    "selector-pseudo-class-no-unknown": null,
+    "no-empty-first-line": true,
+    "string-quotes": "single",
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["after-same-name", "blockless-after-blockless", "inside-block"],
+        "ignore": ["after-comment"]
+      }
+    ],
+    "scss/at-import-partial-extension": "always"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.less"],
+      "customSyntax": "postcss-less"
+    }
+  ]
+}

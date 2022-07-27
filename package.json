@@ -1,0 +1,39 @@
+{
+  "name": "react_ssr_demo",
+  "version": "1.0.0",
+  "description": "react+next+koa2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lan-dongjie/react_ssr_demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lan-dongjie/react_ssr_demo/issues"
+  },
+  "homepage": "https://github.com/lan-dongjie/react_ssr_demo#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
+    "antd": "^4.21.7",
+    "ioredis": "^5.2.2",
+    "koa": "^2.13.4",
+    "koa-router": "^12.0.0",
+    "moment": "^2.29.4",
+    "next": "^12.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.5",
+    "babel-plugin-styled-components": "^2.0.7",
+    "styled-components": "^5.3.5"
+  }
+}
