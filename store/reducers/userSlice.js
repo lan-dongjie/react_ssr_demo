@@ -1,13 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-const user = createSlice({
-  name: "user",
-  initialState: {
-    name: "test @reduxjs/toolkit",
-  },
-  reducers: {
-    updateName: (state, { name }) => {
-      state.name = name;
+// const user = createSlice({
+//   name: "user",
+//   initialState: {
+//     name: "test @reduxjs/toolkit",
+//   },
+//   reducers: {
+//     updateName: (state, { name }) => {
+//       state.name = name;
+//     },
+//   },
+// });
+
+function initialUserReducer(state) {
+  const user = createSlice({
+    name: "user",
+    initialState: state || { name: "" },
+    reducers: {
+      updateName: (state, { name }) => {
+        state.name = name;
+      },
     },
-  },
-});
-export default user.reducer;
+  });
+  return user.reducer;
+}
+export default initialUserReducer;
+// export default user.reducer;

@@ -1,29 +1,14 @@
-import App from "next/app";
-import Layout from "../components/Layout";
 import "antd/dist/antd.css";
+import App from "next/app";
+import Router from "next/router";
 import { Provider } from "react-redux";
+import PageLoader from "../components/PageLoading";
+import Layout from "../components/Layout";
 import whitRedux from "../lib/with-redux";
-// export default App;
-
-// function MyApp({ Component, pageProps }) {
-//   return (
-//     <Layout>
-//       <Provider store={store}>
-
-//       <Component {...pageProps} />
-//       </Provider>
-//     </Layout>
-//   );
-// }
-// function MyApp({ Component, pageProps }) {
-//   return <Component {...pageProps} />;
-// }
-
 class MyApp extends App {
   state = {
-    context: "test context",
+    loading: false,
   };
-
   static async getInitialProps(ctx) {
     const { Component } = ctx;
     let pageProps = {};
@@ -34,16 +19,35 @@ class MyApp extends App {
       pageProps,
     };
   }
+  startLoading() {
+    console.log("111");
+    this.setState({ loading: true });
+  }
+  sotpLoading() {
+    console.log("3222");
+    this.setState({ loading: false });
+  }
+  componentDidMount() {
+    Router.events.on("routeChangeStart", this.startLoading.bind(this));
+    Router.events.on("routeChangeComplete", this.sotpLoading.bind(this));
+    Router.events.on("routeChangeError", this.sotpLoading.bind(this));
+  }
+  componentWillUnmount() {
+    Router.events.off("routeChangeStart", this.startLoading.bind(this));
+    Router.events.off("routeChangeComplete", this.sotpLoading.bind(this));
+    Router.events.off("routeChangeError", this.sotpLoading.bind(this));
+  }
 
   render() {
     const { Component, pageProps, reduxStore } = this.props;
 
     return (
-      <Layout>
-        <Provider store={reduxStore}>
+      <Provider store={reduxStore}>
+        <Layout>
           <Component {...pageProps} />
-        </Provider>
-      </Layout>
+        </Layout>
+        {this.state.loading ? <PageLoader /> : null}
+      </Provider>
     );
   }
 }

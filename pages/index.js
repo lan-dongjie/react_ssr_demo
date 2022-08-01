@@ -1,22 +1,30 @@
-import Router from "next/router";
-import Layout from "../components/Layout";
-const events = ["routeChangeStart", "routeChangeComplete", "routeChangeError", "beforeHistoryChange", "hashChangeStart", "hashChangeComplete"];
+import api from "../lib/api";
 
-function makeEvent(type) {
-  return (args) => {
-    console.log(type, ...args);
+export default function Index() {
+  return <span>Index</span>;
+}
+
+Index.getInitialProps = async ({ ctx, reduxStoore }) => {
+  let data = {};
+  // const user = reduxStoor.getState().user;
+  // if (!user || !user.id) {
+  //   return {
+  //     isLogin: false,
+  //   };
+  // }
+  if (ctx.req && ctx.req.session && ctx.req.session.Auth) {
+    const result = api.request(
+      {
+        url: "/api/third_party/search/respositories?q=react",
+      },
+      ctx.req,
+      ctx.res
+    );
+    data = result.data;
+  }
+
+  return {
+    data,
+    isLogin: true,
   };
-}
-events.forEach((type) => {
-  Router.events.on(type, makeEvent(type));
-});
-
-function page() {
-  return (
-    <>
-      <Layout>Index</Layout>
-    </>
-  );
-}
-
-export default page;
+};

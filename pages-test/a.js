@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { connect } from "react-redux";
-
+import { withRouter } from "next/router";
 const Title = styled.h1`
   color: red;
 `;
@@ -10,7 +10,7 @@ const Title = styled.h1`
 const Comp = dynamic(import("../components/Comp"));
 const A = (props) => {
   const { count, router, name } = props;
-  console.log("aaaaaaaa", props);
+  console.log("aaaaaaaa", router, props);
   return (
     <>
       <Title>title</Title>
@@ -40,4 +40,4 @@ export default connect(function (state) {
     count: state.counter.value,
     name: state.user.name,
   };
-})(A);
+})(withRouter(A));

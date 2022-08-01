@@ -1,6 +1,8 @@
+import axios from "axios";
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./reducers/userSlice";
-import counterSlice from "./reducers/counterSilce";
+import useReducer from "./reducers/useReducer";
+import initialUserReducer from "./reducers/userSlice";
+// import counterSlice from "./reducers/counterSilce";
 // import {createStore} from "redux";
 // import ReduxThunk from "redux-thunk";
 
@@ -37,21 +39,57 @@ import counterSlice from "./reducers/counterSilce";
 //   counter: initialCounter,
 // };
 
-// const allRenducers = {
-//   userReducer,
-//   counterReducer
-// }
+// const allRenducers = combineReducers({
+//   user: userReducer,
+//   counter: counterReducer
+// })
 
 // const store = createStore(allRenducers,initialState,composeWithDevTools(apllyMiddleware(ReduxThunk)));
 // store.subscribe(() => console.log(store.getState()))
 // export default store
-export default function createStore(state) {
+// function initializeStore(state) {
+//   return createStore(allRenducers,Object.assign({},initialState,state),composeWithDevTools(apllyMiddleware(ReduxThunk)));
+// }
+// export default initializeStore
+
+function initialReducer(state = { user: {} }) {
+  const reducer = {};
+  for (const name in state) {
+    if (Object.hasOwnProperty.call(state, name)) {
+      const initSate = state[name];
+      if (name === "user") {
+        reducer[name] = initialUserReducer(initSate);
+      } else {
+        reducer[name] = useReducer({
+          name,
+          initialState: initSate,
+        });
+      }
+    }
+  }
+  return reducer;
+}
+export const LOGOUT = "LOGOUT";
+export function logout() {
+  return (dispatch) => {
+    axios
+      .post(".logout")
+      .then((resp) => {
+        if (resp.status === 200) {
+          dispatch({ type: LOGOUT });
+        } else {
+          console.log("resp", resp);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export default function initializeStore(state) {
   const store = configureStore({
-    reducer: {
-      ...state,
-      counter: counterSlice,
-      user: userSlice,
-    },
+    reducer: initialReducer(state),
   });
   return store;
 }
