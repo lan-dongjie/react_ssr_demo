@@ -16,11 +16,11 @@ export default withRouter(({ router }) => {
         if (resp.status === 200) {
           location.href = publicRuntimeConfig[oAuthType].oauth_url;
         } else {
-          console.log("prepare-auth err", resp);
+          console.log("prepare-auth err");
         }
       })
       .catch((err) => {
-        console.log("prepare-auth err", err);
+        console.log("prepare-auth catch err");
       });
   }, []);
   const handleGotoGiteeOAuth = useCallback(() => {

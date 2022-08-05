@@ -12,6 +12,7 @@ module.exports = (server) => {
         ctx.body = "code not exist";
         return;
       }
+
       const result = await axios({
         method: "POST",
         url: request_token_url,
@@ -20,6 +21,7 @@ module.exports = (server) => {
           Accept: "application/json",
         },
       });
+
       if (result.status === 200 && result.data && !result.data.error) {
         ctx.session.Auth = result.data;
         const { access_token, token_type } = result.data;
@@ -31,14 +33,13 @@ module.exports = (server) => {
           },
         });
         ctx.session.userInfo = userInfoResp.data;
-        console.log("111111111111", ctx.session.userInfo);
 
         let redirect_url = "/";
-        if (ctx.session.urlBeforeOauth && ctx.session.urlBeforeOauth === "/Login") {
+        if (ctx.session.urlBeforeOauth && ctx.session.urlBeforeOauth !== "/Login") {
           redirect_url = ctx.session.urlBeforeOauth;
         }
-        ctx.redirect(redirect_url);
         ctx.session.urlBeforeOauth = "";
+        ctx.redirect(redirect_url);
       } else {
         ctx.body = `request token failed: ${result.message || result.data.error}`;
       }
@@ -51,6 +52,7 @@ module.exports = (server) => {
     if (path === "/logout" && method === "POST") {
       ctx.session = null;
       ctx.body = `logout success`;
+      console.log("logout");
     } else {
       await next();
     }

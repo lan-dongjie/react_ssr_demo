@@ -7,7 +7,6 @@ const redis = new Redis({
 
 function getKeys() {
 
-  console.log(keys);
   await redis.set('test',5, 123)
   const keys = await redis.keys("*");
   await redis.get('test')

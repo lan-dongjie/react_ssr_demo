@@ -24,7 +24,7 @@ app.prepare().then(() => {
   const session_signed_key = ["app oauth"];
   const SESSION_CONFIG = {
     key: "jid" /**  cookie的key。 (默认是 koa:sess) */,
-    maxAge: 60 * 1000 /**  session 过期时间，以毫秒ms为单位计算 。*/,
+    maxAge: 1 * 60 * 60 * 1000 /**  session 过期时间，以毫秒ms为单位计算 。*/,
     // cookie: { maxAge: 1 * 60 * 60 * 1000 },
     store: new RedisSessionStore(redis),
     // autoCommit: true /** 自动提交到响应头。(默认是 true) */,
@@ -37,28 +37,9 @@ app.prepare().then(() => {
   server.keys = session_signed_key;
   server.use(koaBody());
   server.use(session(SESSION_CONFIG, server));
-  // server.use(async (ctx, next) => {
-  //   if (ctx.path === "/Login") {
-  //     ctx.session.aaa = "aaaa";
-  //     ctx.response.set("Access-Control-Allow-Credentials", true);
-  //     ctx.redirect("/detail");
-  //     console.log("aaaaaaaaaa", ctx.session);
-  //     ctx.session.aaa = "aaaa";
-  //   } else {
-  //     await next();
-  //   }
-  // });
-  // server.use(async (ctx, next) => {
-  //   console.log("qqqqqqqqqqqqqqqq", ctx.session);
-  //   await next();
-  // });
   // 必须在use session 后
   auth(server);
   api(server);
-  // server.use(async (ctx, next) => {
-  //   console.log("session is:", ctx.session);
-  //   await next();
-  // });
   // 后面的中间件可能已经用到了auth
   server.use(router.routes());
   server.use(async (ctx, next) => {

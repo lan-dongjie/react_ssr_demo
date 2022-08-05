@@ -25,7 +25,7 @@ function page() {
     axios.get("/api/user/info").then((res) => {
       if (res.status === 200) {
         setLoginState(true);
-        console.log(res.data);
+
         setName(res.data.name);
       } else {
         setLoginState(false);

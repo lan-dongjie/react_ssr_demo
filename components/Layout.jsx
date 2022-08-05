@@ -41,10 +41,8 @@ const MyLayout = ({ children, user, logout, router }) => {
 
   const userDropDown = (
     <Menu>
-      <Menu.Item key="1">
-        <a href="javascript: void(0)" onClick={handleLogout}>
-          登 出
-        </a>
+      <Menu.Item key="1" onClick={handleLogout}>
+        登 出
       </Menu.Item>
     </Menu>
   );
@@ -72,20 +70,26 @@ const MyLayout = ({ children, user, logout, router }) => {
           justify-content: space-between;
         }
         .header-left {
+          height: 100%;
           display: flex;
           justify-content: space-between;
+        }
+        .header-right {
+          height: 100%;
+        }
+        .input-search {
+          padding-top: 16px;
         }
       `}</style>
 
       <Header>
         <Container renderer={<div className="hearder-inner"></div>}>
           <div className="header-left">
-            <div className="logo">
-              <Link href="/">
-                <GithubOutlined style={gitIconStyle} />
-              </Link>
-            </div>
-            <div>
+            <Link href="/">
+              <GithubOutlined style={gitIconStyle} />
+            </Link>
+
+            <div className="input-search">
               <Input.Search placeholder="搜索仓库" value={search} onChange={handleSearchChange} onSearch={handleSearch} />
             </div>
           </div>
@@ -120,7 +124,6 @@ const MyLayout = ({ children, user, logout, router }) => {
 
 export default connect(
   function mapState(state) {
-    console.log("state.user", state.user);
     return {
       user: state.user,
     };

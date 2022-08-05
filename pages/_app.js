@@ -20,11 +20,9 @@ class MyApp extends App {
     };
   }
   startLoading() {
-    console.log("111");
     this.setState({ loading: true });
   }
   sotpLoading() {
-    console.log("3222");
     this.setState({ loading: false });
   }
   componentDidMount() {

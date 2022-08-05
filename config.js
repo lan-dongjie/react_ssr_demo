@@ -15,7 +15,7 @@ const github = {
   request_token_url: "https://github.com/login/oauth/access_token",
   client_id: GITHUB_CLIENT_ID,
   client_secret: GITHUB_CLIENT_SECRET,
-  oauth_url: `${GITHUB_OAUTH_URL}?client_id=${GITHUB_CLIENT_ID}&scope=${SCOPE}`,
+  oauth_url: `${GITHUB_OAUTH_URL}?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${SCOPE}`,
   getTokenPostData(code) {
     return {
       code,
@@ -27,12 +27,13 @@ const github = {
   base_api: GITHUB_BASE_URL,
   apis: {
     respositories: `${GITHUB_BASE_URL}/search/respositories`,
+    user_repos: `${GITHUB_BASE_URL}/user/repos`,
   },
 };
 
 const GITEE_CLIENT_ID = "3018fe2c58272f6517f6c60f075d0b3576e5d0f4356da7bb563e68988454d93d";
 const GITEE_CLIENT_SECRET = "a4d3ccfd4d736619f1ebc144bcde40b5f5b54d64c119cc18ca547cdc58d9ee8e";
-const GITEE_BASE_URL = "https://api.giee.com";
+const GITEE_BASE_URL = "https://gitee.com/api/v5";
 const gitee = {
   user_info_url: "https://gitee.com/api/v5/user",
   request_token_url: "https://gitee.com/oauth/token",

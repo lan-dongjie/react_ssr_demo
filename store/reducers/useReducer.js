@@ -1,14 +1,18 @@
-function useReducer(state) {
-  const slice = createSlice({
-    name: state.name,
-    initialState: state.initialState,
-    reducers: {
-      updateName: (state, { name }) => {
-        state.name = name;
-      },
-    },
-  });
-  return slice.reducer;
-}
+import { createSlice } from "@reduxjs/toolkit";
 
-export default useReducer;
+const user = createSlice({
+  name: "user",
+  initialState: {},
+  reducers: {
+    user_update: (state, { payload }) => {
+      Object.assign(state, payload);
+    },
+    user_logout: (state) => {
+      state = {};
+      console.log("user_logout", state);
+    },
+  },
+});
+
+export const { user_update, user_logout } = user.actions;
+export default user.reducer;
