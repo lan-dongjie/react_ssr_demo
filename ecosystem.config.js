@@ -1,5 +1,5 @@
 module.exports = {
-  app: [
+  apps: [
     {
       name: "react-next-demo",
       script: "./server.js",
