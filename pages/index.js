@@ -108,16 +108,15 @@ Index.getInitialProps = async ({ ctx, reduxStore }) => {
       };
     }
   }
-  if (ctx.req && ctx.req.session && ctx.req.session.Auth) {
+  if (ctx && ctx.req && ctx.req.session && ctx.req.session.Auth) {
     try {
       const reposResult = await request(
         {
           url: apis.user_repos,
         },
-        ctx.req,
-        ctx.res
+        ctx
       );
-      // console.log("resultresultresult", result.data);
+
       if (reposResult.status === 200) {
         data.repos = reposResult.data;
       }
@@ -125,15 +124,14 @@ Index.getInitialProps = async ({ ctx, reduxStore }) => {
         {
           url: apis.user_repos,
         },
-        ctx.req,
-        ctx.res
+        ctx
       );
-      // console.log("resultresultresult", result.data);
+
       if (staredResult.status === 200) {
         data.stared = staredResult.data;
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   }
 

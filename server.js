@@ -6,8 +6,12 @@ const session = require("koa-session");
 const koaBody = require("koa-body");
 const { default: Redis } = require("ioredis");
 const RedisSessionStore = require("./server/session-store");
+const atob = require("atob");
+
 const auth = require("./server/auth");
 const api = require("./server/api");
+
+global.atob = atob;
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -39,12 +43,16 @@ app.prepare().then(() => {
   server.use(session(SESSION_CONFIG, server));
   // 必须在use session 后
   auth(server);
+  server.use(async (ctx, next) => {
+    ctx.req.session = ctx.session;
+    await next();
+  });
   api(server);
   // 后面的中间件可能已经用到了auth
   server.use(router.routes());
   server.use(async (ctx, next) => {
-    // ctx.session.userInfo = { name: "sssss" };
     ctx.req.session = ctx.session;
+
     await handle(ctx.req, ctx.res);
     // 如果不设置false，koa会设置body,而handle已经设置好了body
     ctx.respond = false;

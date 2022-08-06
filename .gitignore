@@ -1,3 +1,6 @@
 node_modules
 dist
+dest
 .next/
+./config.js
+config.js

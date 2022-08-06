@@ -198,12 +198,21 @@ Search.getInitialProps = async ({ ctx }) => {
       {
         url: `${apis.search_repositories}${queryString}`,
       },
-      ctx.req,
-      ctx.res
+      ctx
     );
     // console.log("resultresultresult", reposResult.data);
     if (reposResult.status === 200) {
-      repos = reposResult.data;
+      if (Array.isArray(reposResult.data)) {
+        repos.items = reposResult.data;
+        repos.total_count = (page || 1) * per_page;
+        if (reposResult.data.length > per_page) {
+          repos.total_count++;
+        }
+      } else if (reposResult.success === undefined) {
+        repos = reposResult.data;
+      } else {
+        console.log("请求数据失败");
+      }
     }
   } catch (error) {
     console.log("search error");

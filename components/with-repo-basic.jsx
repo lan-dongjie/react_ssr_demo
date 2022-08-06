@@ -45,9 +45,9 @@ export default function WithRepoBasic(Comp, type = "index") {
               </Link>
             )}
           </div>
-          <div>
-            <Comp {...rest} />
-          </div>
+        </div>
+        <div className="readme">
+          <Comp {...rest} />
         </div>
         <style jsx>
           {`
@@ -79,8 +79,7 @@ export default function WithRepoBasic(Comp, type = "index") {
         {
           url: `${apis.repos_detail}/${owner}/${name}`,
         },
-        ctx.req,
-        ctx.res
+        ctx
       );
       // console.log("resultresultresult", result.data);
       if (result.status === 200) {
